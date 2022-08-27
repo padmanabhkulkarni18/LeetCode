@@ -28,6 +28,8 @@ I can be placed before V (5) and X (10) to make 4 and 9.
 X can be placed before L (50) and C (100) to make 40 and 90.
 C can be placed before D (500) and M (1000) to make 400 and 900.
 Given a roman numeral, convert it to an integer.
+IV-> result
+,IX,XL,XC,CD,CM
  */
 
 
@@ -42,12 +44,42 @@ public class RomanToInteger {
 
     public static int romanToInt(String s) {
         int result = 0;
+        char nextChar = 0;
         for(int i=0;i<s.length();i++){
             char eachChar = s.charAt(i);
-            result +=  converter(eachChar);
+            if(i!=s.length()-1) {
+                nextChar = s.charAt(i + 1);
+            }
+            int combResult = checkCombinationsAndAddToTheResult(eachChar, nextChar);
+            if(combResult==0) {
+                result += converter(eachChar);
+            }else {
+                i++;
+                result = result+combResult;
+            }
         }
 
         return Integer.valueOf(result);
+    }
+
+    private static int checkCombinationsAndAddToTheResult(char eachChar, char nextChar) {
+
+        if(eachChar=='I' && nextChar=='V'){
+            return 4;
+        } else if(eachChar=='I' && nextChar=='X'){
+            return 9;
+        } else if(eachChar=='X' && nextChar=='L'){
+            return 40;
+        } else if(eachChar=='X' && nextChar=='C'){
+            return 90;
+        } else if(eachChar=='C' && nextChar=='D') {
+            return 400;
+        } else if(eachChar=='C' && nextChar=='M') {
+            return 900;
+        }
+            return 0;
+
+
     }
 
     public static int converter(char s) {
