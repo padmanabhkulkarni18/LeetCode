@@ -58,7 +58,6 @@ public class RomanToInteger {
                 result = result+combResult;
             }
         }
-
         return Integer.valueOf(result);
     }
 
