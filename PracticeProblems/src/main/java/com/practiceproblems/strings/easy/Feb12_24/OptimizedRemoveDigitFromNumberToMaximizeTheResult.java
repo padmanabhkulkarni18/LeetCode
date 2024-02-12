@@ -26,69 +26,40 @@ Both result in the string "51".
 
 * */
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
 
-public class RemoveDigitFromNumberToMaximizeTheResult {
+public class OptimizedRemoveDigitFromNumberToMaximizeTheResult {
 
     public static void main(String[] args) {
 
-        String number = "299858953917872714814599237991174513476623756395992135212546127959342974628712329595771672911914471";
-        char digit = '3';
+        String number = "231031";
+        char digit = '1';
+
+        //"299858953917872714814599237991174513476623756395992135212546127959342974628712329595771672911914471" , "3";
         // 13235, 13325
         //o/p -> 13235
         //expected -> 13325
 
-        RemoveDigitFromNumberToMaximizeTheResult removeDigitFromNumberToMaximizeTheResult = new RemoveDigitFromNumberToMaximizeTheResult();
+        OptimizedRemoveDigitFromNumberToMaximizeTheResult removeDigitFromNumberToMaximizeTheResult = new OptimizedRemoveDigitFromNumberToMaximizeTheResult();
         System.out.println(removeDigitFromNumberToMaximizeTheResult.removeDigit(number,digit));
 
     }
 
     public String removeDigit(String number, char digit) {
 
-        boolean isDigitRemoved = false;
-
-        List<Long> outputArrayList = new ArrayList<>();
-
-        int numberOfOccurences = 0;
-
-        Queue<Integer> queueIndexes = new ArrayDeque<>();
-        if (number.contains(String.valueOf(digit))) {
-            for (int i = 0; i < number.length(); i++) {
-                if (number.charAt(i) == digit) {
-                    numberOfOccurences++;
-                    queueIndexes.add(i);
-                }
+        int index = 0,n=number.length();
+        for(int i=0;i<n;i++){
+            if(number.charAt(i)==digit){
+                index = i;
+                if(i<n-1 && digit < number.charAt(i+1))
+                    break;
             }
         }
-
-        for (int j = 0; j < numberOfOccurences; j++) {
-            int eachDigitIndex = queueIndexes.remove();
-            long eachCombination= getEachCombination(number, eachDigitIndex);
-            outputArrayList.add(eachCombination);
+        number = number.substring(0, index) + number.substring(index+1);
+        return number;
         }
-        long max =0;
-        for (int k = 0; k < numberOfOccurences; k++) {
-            max = outputArrayList.get(0);
-            if (max < outputArrayList.get(k)) {
-                max = outputArrayList.get(k);
-            }
-        }
-        return String.valueOf(max);
-    }
-
-    public long getEachCombination(String number, int indexToBeIgnored){
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < number.length(); i++) {
-                if(i!=indexToBeIgnored){
-                    stringBuilder.append(number.charAt(i));
-            }
-
-        }
-        System.out.println(stringBuilder.toString());
-        return Long.parseLong(stringBuilder.toString());
-    }
-
-
-    }
+}
 
