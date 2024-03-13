@@ -48,6 +48,11 @@ public class CustomSortStringMedium791 {
 
     public String customSortString(String order, String s){
 
+        //This takes O(m+n+k)
+        //m is length of s
+        //n is character contains the order
+        //k is the remaining characters
+
         StringBuilder result = new StringBuilder();
 
         HashMap<Character,Integer> hashMap = new HashMap<>();
